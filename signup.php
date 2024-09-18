@@ -1,4 +1,51 @@
-<?php include 'header.php';?>
+<?php include 'header.php';
+include 'connect.php';
+
+
+session_start();
+$errors = [];
+$f_name = $l_name = $email = $password = $confirm_password = "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    if(empty($_POST["f_name"])){
+        $errors[] = "First Name is required";
+    }else{
+        $f_name = $_POST["f_name"];
+    }
+    if(empty($_POST["l_name"])){
+        $errors[] = "Last Name is required";
+    }else{
+        $l_name = $_POST["l_name"];
+    }
+    if(empty($_POST["email"])){
+        $errors[] = "Email is required";
+    }else{
+        $email = $_POST["email"];
+    }
+    if(empty($_POST["phone"])){
+        $errors[] = "Phone Number is required";
+    }else{
+        $phone = $_POST["phone"];
+    }
+    if(empty($_POST["password"]) === empty($_POST["confirm_password"])){
+    $errors[] = "Password is required";
+    }else{
+        $password = $_POST["password"];
+    }
+
+    if(empty($errors)){
+
+        $sql = "INSERT INTO login (f_name, l_name, email, phone, password) values ('$f_name', '$l_name', '$email', '$phone', '$password')";
+
+        $r =mysqli_query($conn, $sql);
+
+
+
+    }
+}
+
+?>
     <div class="conteiner">
         <div class="row">
             <div class="col d-flex justify-content-center mt-5">
